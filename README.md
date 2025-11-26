@@ -48,5 +48,3 @@ The solver performs three key tasks:
 
 ---
 
-## 📁 Repository Structure
-
