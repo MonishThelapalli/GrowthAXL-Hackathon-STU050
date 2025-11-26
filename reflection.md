@@ -1,0 +1,7 @@
+# Reflection
+
+To solve the GrowthAXL Hackathon CTF, I developed a Python-based pipeline combining hashing logic, dataset search, TF-IDF modeling, RandomForest classification, and SHAP interpretability. I began by generating a SHA-256 hash of the user ID `STU050` and used the first eight uppercase characters as the target signature. This hash was searched across all review texts to identify the manipulated review. Once found, I extracted the corresponding book title, cleaned it to obtain the first eight non-space characters, and hashed it again to produce FLAG1. The embedded short hash inside the fake review directly formed FLAG2.
+
+For FLAG3, I isolated all reviews belonging to the same book and applied heuristic labeling. Reviews that were short, contained superlatives, and had a five-star rating were marked as suspicious; others were considered genuine. After vectorizing review text using a TF-IDF model (1000-feature limit, English stopwords), I trained a RandomForest classifier with 100 trees to learn patterns of suspiciousness. SHAP’s TreeExplainer was then applied only to genuine reviews, and the three words with the most negative mean SHAP values were selected, representing signals that reduce suspicion. These words were concatenated with the numeric portion of the user ID and hashed to compute FLAG3.
+
+This approach combined deterministic hashing, flexible NLP preprocessing, fallback handling for non-separable labels, and explainable AI to uncover all three flags reliably.
